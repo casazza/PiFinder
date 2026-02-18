@@ -77,8 +77,3 @@ Arp
 ----
 Atlas of Peculiar Galaxies    (Arp 1966)
 Select galaxies with interest morphology.  See `Wikipedia - Atlas of Peculiar Galaxies <https://en.wikipedia.org/wiki/Atlas_of_Peculiar_Galaxies>`_
-
-Harris
-----
-Globular Clusters in the Milky Way (Harris, 1997)
-This catalog compiled was by William E. Harris and used by permisson.
