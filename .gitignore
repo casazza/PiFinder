@@ -160,7 +160,6 @@ test_ubx/*
 
 #Mark's additions
 # Specific PiFinder Data
-astro_data/pifinder_objects.db
 astro_data/pifinder_objects.db.bak*
 astro_data/tyc_main.dat
 astro_data/constellations.json
