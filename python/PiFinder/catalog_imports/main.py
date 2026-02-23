@@ -15,30 +15,30 @@ from .database import init_shared_database
 # Loader registry - import functions dynamically to reduce coupling
 CATALOG_LOADERS = [
     # Core catalogs (order matters for referencing)
-    ("steinicke_loader", "load_ngc_catalog"),
+    #("steinicke_loader", "load_ngc_catalog"),
     # Additional catalogs
-    ("caldwell_loader", "load_caldwell"),
-    ("specialized_loaders", "load_collinder"),
-    ("specialized_loaders", "load_taas200"),
-    ("herschel_loader", "load_herschel400"),
-    ("sac_loaders", "load_sac_asterisms"),
-    ("sac_loaders", "load_sac_multistars"),
-    ("sac_loaders", "load_sac_redstars"),
-    ("bright_stars_loader", "load_bright_stars"),
-    ("specialized_loaders", "load_egc"),
-    ("specialized_loaders", "load_rasc_double_Stars"),
-    ("specialized_loaders", "load_barnard"),
-    ("specialized_loaders", "load_sharpless"),
-    ("specialized_loaders", "load_abell"),
-    ("specialized_loaders", "load_arp"),
-    ("specialized_loaders", "load_tlk_90_vars"),
-    ("wds_loader", "load_wds"),
+    #("caldwell_loader", "load_caldwell"),
+    #("specialized_loaders", "load_collinder"),
+    #("specialized_loaders", "load_taas200"),
+    #("herschel_loader", "load_herschel400"),
+    #("sac_loaders", "load_sac_asterisms"),
+    #("sac_loaders", "load_sac_multistars"),
+    #("sac_loaders", "load_sac_redstars"),
+    #("bright_stars_loader", "load_bright_stars"),
+    #("specialized_loaders", "load_egc"),
+    #("specialized_loaders", "load_rasc_double_Stars"),
+    #("specialized_loaders", "load_barnard"),
+    #("specialized_loaders", "load_sharpless"),
+    #("specialized_loaders", "load_abell"),
+    #("specialized_loaders", "load_arp"),
+    #("specialized_loaders", "load_tlk_90_vars"),
+    #("wds_loader", "load_wds"),
     ("harris_loader", "load_harris"),
 ]
 
 POST_PROCESSING_FUNCTIONS = [
     ("post_processing", "fix_object_types"),
-    ("post_processing", "add_missing_messier_objects"),
+    #("post_processing", "add_missing_messier_objects"),
 ]
 
 
@@ -85,7 +85,7 @@ def main():
     objects_db, _ = init_shared_database()
 
     logging.info("creating catalog tables")
-    objects_db.destroy_tables()
+    #objects_db.destroy_tables()
     objects_db.create_tables()
 
     logging.info("loading catalogs")
