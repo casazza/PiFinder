@@ -115,11 +115,11 @@ def read_lynga_catalog(file_path: Path) -> npt.NDArray:
     - Bytes 90- 92: r_[Fe/H] - Reference for metallicity (I3)
     - Bytes 93- 98: E(B-V)  - Reddening (F6.2 mag)
     - Bytes 101-102: ClTyp  - "DO" doubtful cluster flag (A2)
-    - Bytes 191-194: maxBr  - Brightest star magnitude (F4.1)
     - Bytes 195-196: TrConc - Trumpler concentration class (I2)
     - Bytes 197-198: TrRange - Trumpler range class (I2)
     - Bytes 199-200: TrRich - Trumpler richness class (A2)
     - Byte  202:     TrNeb  - Trumpler nebulosity (A1)
+    - Bytes 215-218: maxBr.50  - Brightest star magnitude from ref.50 (F4.1)
     - Bytes 225-228: totMag.50 - Total magnitude from ref.50 (F4.1)
     - Bytes 235-238: totMag.422 - Total magnitude from Skiff (F4.1)
     - Bytes 239-242: i(B-V).422 - Integrated B-V from Skiff (F4.2)
@@ -135,10 +135,10 @@ def read_lynga_catalog(file_path: Path) -> npt.NDArray:
     """
     # Define the column specifications (0-based, end-exclusive)
     col_specs = [
-        (0, 2),    # ClSeq
-        (2, 6),    # ClNum
-        (7, 9),    # RA2000h
-        (9, 13),   # RA2000m
+        (0, 2),  # ClSeq
+        (2, 6),  # ClNum
+        (7, 9),  # RA2000h
+        (9, 13),  # RA2000m
         (13, 14),  # DE2000-
         (14, 16),  # DE2000d
         (16, 18),  # DE2000m
@@ -148,12 +148,12 @@ def read_lynga_catalog(file_path: Path) -> npt.NDArray:
         (84, 89),  # [Fe/H]
         (92, 98),  # E(B-V)
         (100, 102),  # ClTyp
-        (190, 194),  # maxBr
         (194, 196),  # TrConc
         (196, 198),  # TrRange
         (198, 200),  # TrRich
         (201, 202),  # TrNeb
-        (224, 228),  # totMag.50
+        (214, 218),  # maxBr.50 (brightest star, ref.50)
+        (224, 228),  # totMag.50 (total magnitude, ref.50)
         (234, 238),  # totMag.422 (Skiff total mag)
         (238, 242),  # i(B-V).422 (Skiff B-V)
         (242, 246),  # N.422 (Skiff star count)
@@ -169,36 +169,36 @@ def read_lynga_catalog(file_path: Path) -> npt.NDArray:
 
     # Define dtype for structured array
     dtype = [
-        ("ClSeq", "i4"),     # Cluster Sequence code
-        ("ClNum", "i4"),     # Number inside sequence
-        ("RA2000h", "i4"),   # RA 2000 hours
-        ("RA2000m", "f4"),   # RA 2000 minutes
-        ("DE2000s", "U1"),   # Dec 2000 sign
-        ("DE2000d", "i4"),   # Dec 2000 degrees
-        ("DE2000m", "i4"),   # Dec 2000 minutes
-        ("Diam", "f4"),      # Angular diameter (arcmin)
-        ("Dist", "i4"),      # Distance (pc)
-        ("logAge", "f4"),    # log(age) years
-        ("FeH", "f4"),       # Metallicity [Fe/H]
-        ("EBV", "f4"),       # Reddening E(B-V)
-        ("ClTyp", "U2"),     # Doubtful cluster flag
-        ("maxBr", "f4"),     # Brightest star magnitude
-        ("TrConc", "i4"),    # Trumpler concentration class
-        ("TrRange", "i4"),   # Trumpler range class
-        ("TrRich", "U2"),    # Trumpler richness class
-        ("TrNeb", "U1"),     # Trumpler nebulosity
+        ("ClSeq", "i4"),  # Cluster Sequence code
+        ("ClNum", "i4"),  # Number inside sequence
+        ("RA2000h", "i4"),  # RA 2000 hours
+        ("RA2000m", "f4"),  # RA 2000 minutes
+        ("DE2000s", "U1"),  # Dec 2000 sign
+        ("DE2000d", "i4"),  # Dec 2000 degrees
+        ("DE2000m", "i4"),  # Dec 2000 minutes
+        ("Diam", "f4"),  # Angular diameter (arcmin)
+        ("Dist", "i4"),  # Distance (pc)
+        ("logAge", "f4"),  # log(age) years
+        ("FeH", "f4"),  # Metallicity [Fe/H]
+        ("EBV", "f4"),  # Reddening E(B-V)
+        ("ClTyp", "U2"),  # Doubtful cluster flag
+        ("TrConc", "i4"),  # Trumpler concentration class
+        ("TrRange", "i4"),  # Trumpler range class
+        ("TrRich", "U2"),  # Trumpler richness class
+        ("TrNeb", "U1"),  # Trumpler nebulosity
+        ("maxBr50", "f4"),  # Brightest star magnitude (ref.50)
         ("totMag50", "f4"),  # Total magnitude (ref.50)
-        ("totMag422", "f4"), # Total magnitude (Skiff ref.422)
-        ("iBV422", "f4"),    # Integrated B-V (Skiff)
-        ("N422", "i4"),      # Number of stars (Skiff)
-        ("wRVel", "f4"),     # Radial velocity weight
-        ("RVel", "i4"),      # Radial velocity (km/s)
-        ("Cname", "U9"),     # "C" designation
-        ("DistJDL", "i4"),   # jdl distance (pc)
-        ("turnJDL", "f4"),   # jdl turn-off colour
-        ("AgeJDL", "f4"),    # jdl age (Myr)
-        ("EBVJDL", "f4"),    # jdl reddening
-        ("FeHJDL", "f4"),    # jdl abundance
+        ("totMag422", "f4"),  # Total magnitude (Skiff ref.422)
+        ("iBV422", "f4"),  # Integrated B-V (Skiff)
+        ("N422", "i4"),  # Number of stars (Skiff)
+        ("wRVel", "f4"),  # Radial velocity weight
+        ("RVel", "i4"),  # Radial velocity (km/s)
+        ("Cname", "U9"),  # "C" designation
+        ("DistJDL", "i4"),  # jdl distance (pc)
+        ("turnJDL", "f4"),  # jdl turn-off colour
+        ("AgeJDL", "f4"),  # jdl age (Myr)
+        ("EBVJDL", "f4"),  # jdl reddening
+        ("FeHJDL", "f4"),  # jdl abundance
     ]
 
     def parse_field(value: str, field_dtype: str) -> Any:
@@ -280,9 +280,24 @@ def build_cluster_designation(cl_seq: int, cl_num: int) -> Tuple[str, bool]:
 
     # Official catalog prefixes that are recognized in the PiFinder database
     official_prefixes = {
-        "NGC", "IC", "Collinder", "Col", "Melotte", "Trumpler", "Tr",
-        "Berkeley", "Stock", "King", "Ruprecht", "Harvard", "Hogg",
-        "Markarian", "Lynga", "Bochum", "Basel", "Westerlund",
+        "NGC",
+        "IC",
+        "Collinder",
+        "Col",
+        "Melotte",
+        "Trumpler",
+        "Tr",
+        "Berkeley",
+        "Stock",
+        "King",
+        "Ruprecht",
+        "Harvard",
+        "Hogg",
+        "Markarian",
+        "Lynga",
+        "Bochum",
+        "Basel",
+        "Westerlund",
     }
 
     is_official = prefix in official_prefixes
@@ -303,8 +318,25 @@ def identify_catalog_type(name: str) -> Tuple[bool, str]:
         tuple: (is_official_catalog, normalized_name)
     """
     official_catalogs = {
-        "NGC", "IC", "M", "C", "Col", "Ta2", "H", "SaA", "SaM",
-        "SaR", "Str", "EGC", "RDS", "B", "Sh2", "Abl", "Arp", "TLK", "WDS",
+        "NGC",
+        "IC",
+        "M",
+        "C",
+        "Col",
+        "Ta2",
+        "H",
+        "SaA",
+        "SaM",
+        "SaR",
+        "Str",
+        "EGC",
+        "RDS",
+        "B",
+        "Sh2",
+        "Abl",
+        "Arp",
+        "TLK",
+        "WDS",
     }
 
     name = name.strip()
@@ -357,10 +389,13 @@ def create_cluster_object(entry: npt.NDArray, seq: int) -> Dict[str, Any]:
         )
 
     # --- Magnitude ---
-    # Prefer Skiff total magnitude (ref.422), fall back to ref.50 total magnitude
+    # Priority: totMag.422 (Skiff integrated V) → totMag.50 (ref.50 integrated)
+    #           → maxBr.50 (brightest member star, last resort)
     mag_value = entry["totMag422"].item()
     if not is_valid_mag(mag_value):
         mag_value = entry["totMag50"].item()
+    if not is_valid_mag(mag_value):
+        mag_value = entry["maxBr50"].item()
 
     if is_valid_mag(mag_value):
         result["mag"] = MagnitudeObject([mag_value])
@@ -456,8 +491,8 @@ def create_cluster_object(entry: npt.NDArray, seq: int) -> Dict[str, Any]:
         logging.debug(f"  Description: {len(description_parts)} features")
 
     # --- Names ---
-    result["catalog_names"] = []   # Official catalog designations for aka_names
-    result["common_names"] = []    # Everything else
+    result["catalog_names"] = []  # Official catalog designations for aka_names
+    result["common_names"] = []  # Everything else
     result["primary_name"] = f"Lyn {seq}"
 
     # Build designation from ClSeq + ClNum
@@ -481,11 +516,7 @@ def create_cluster_object(entry: npt.NDArray, seq: int) -> Dict[str, Any]:
             if VERBOSE:
                 logging.info(f"  Common name: '{designation}'")
 
-    # "C" designation (e.g. C2357+606) - always a common name
-    if cname:
-        result["common_names"].append(cname)
-        if VERBOSE:
-            logging.info(f"  C-designation: '{cname}'")
+    # Note: Cname (e.g. C2357+606) is a positional identifier only, not stored
 
     if VERBOSE:
         logging.info(
